@@ -55,12 +55,14 @@ const seed = async () => {
     await Promise.all(
         getBooks().map(book => {
             const { title, isFiction, datePublished } = book;
-            const newBook = db.book.create({
-                data: {
-                    title, isFiction, datePublished, authorId: author.id
-                }
-            });
-            return newBook
+            if (author) {
+                const newBook = db.book.create({
+                    data: {
+                        title, isFiction, datePublished, authorId: author.id
+                    }
+                });
+                return newBook
+            }
         })
     )
 }
